@@ -18,6 +18,21 @@
 （之後加新工具時會自動更新）
 - （尚無）
 
+## 開工 SOP（使用者說「開工」時執行）
+1. 讀 Obsidian 工作筆記：`~/Library/CloudStorage/GoogleDrive-heero7394@gmail.com/我的雲端硬碟/secondbrain/claude-2026-project/工作筆記.md`
+2. 摘要「⏯️ 上次做到哪」段（不要全文貼出）
+3. 執行 `git status --short`（在 claude-2026-project 目錄）
+4. 執行 `git fetch origin`，確認遠端是否有新 commit（不主動 pull）
+5. 給結構化報告 + 建議下一步，等使用者選方向
+
+## 收工 SOP（使用者說「收工」時執行）
+1. 從對話歷史摘要今天完成的事
+2. 更新 Obsidian 工作筆記：
+   - 「⏯️ 上次做到哪」→ 填今天最後動作
+   - 「🗓️ 最近更動紀錄」→ 加一行今天日期 + 摘要 + ✅✅✅
+3. `git add`（排除 `.claude/`）→ `git commit` → `git push origin main`
+4. 回報三勾表格（GDrive ✅ / Obsidian ✅ / GitHub ✅）
+
 ## 工作注意事項
 - 學生資料一律去識別化（只用座號 + 班級代號）
 - commit 訊息要寫清楚做了什麼 + 為什麼
