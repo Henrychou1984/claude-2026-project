@@ -16,7 +16,7 @@
 
 ## 工具清單
 （之後加新工具時會自動更新）
-- （尚無）
+- **live-translator** (`tools/live-translator/`)：macOS 即時英中字幕翻譯，系統音訊 → faster-whisper → Argos Translate → 懸浮視窗。啟動：`source venv/bin/activate && python main.py`
 
 ## 開工 SOP（使用者說「開工」時執行）
 1. 讀 Obsidian 工作筆記：`~/Library/CloudStorage/GoogleDrive-heero7394@gmail.com/我的雲端硬碟/secondbrain/claude-2026-project/工作筆記.md`

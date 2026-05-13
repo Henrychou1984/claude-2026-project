@@ -14,3 +14,12 @@ credentials.*
 # Node.js
 node_modules/
 package-lock.json
+
+# Python
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# Brainstorm 視覺暫存
+.superpowers/
