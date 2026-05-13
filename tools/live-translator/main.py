@@ -1,5 +1,5 @@
 import threading
-import rumps
+import tkinter.messagebox as msgbox
 
 from audio import find_blackhole_device, AudioCapture
 from transcriber import Transcriber
@@ -7,46 +7,35 @@ from translator import Translator
 from ui import SubtitleWindow
 
 
-class LiveTranslatorApp(rumps.App):
+class LiveTranslator:
     def __init__(self):
-        super().__init__('🎙', quit_button=None)
-        self.menu = [
-            rumps.MenuItem('開始翻譯', callback=self.toggle_translation),
-            rumps.MenuItem('清空字幕', callback=self.clear_subtitles),
-            None,
-            rumps.MenuItem('結束', callback=self.quit_app),
-        ]
         self._running = False
         self._audio: AudioCapture | None = None
         self._transcriber: Transcriber | None = None
         self._translator: Translator | None = None
 
-        self._window = SubtitleWindow()
-        self._window.start()
+        self._window = SubtitleWindow(
+            on_toggle=self.toggle,
+            on_quit=self._stop,
+        )
 
-    def toggle_translation(self, sender):
+    def toggle(self):
         if self._running:
             self._stop()
-            sender.title = '開始翻譯'
-            self.title = '🎙'
         else:
-            if self._start():
-                sender.title = '暫停翻譯'
-                self.title = '🔴'
+            self._start()
 
-    def _start(self) -> bool:
+    def _start(self):
         device = find_blackhole_device()
         if device is None:
-            rumps.alert(
-                title='找不到 BlackHole',
-                message=(
-                    '請先安裝 BlackHole 2ch，並在「音訊 MIDI 設定」\n'
-                    '建立包含 BlackHole + 內建喇叭的「多輸出裝置」，\n'
-                    '再將系統音效輸出切換到該裝置。\n\n'
-                    '下載：https://existential.audio/blackhole/'
-                ),
+            msgbox.showwarning(
+                '找不到 BlackHole',
+                '請先安裝 BlackHole 2ch，並在「音訊 MIDI 設定」\n'
+                '建立包含 BlackHole + 內建喇叭的「多輸出裝置」，\n'
+                '再將系統音效輸出切換到該裝置。\n\n'
+                '下載：https://existential.audio/blackhole/',
             )
-            return False
+            return
 
         if self._translator is None:
             self._translator = Translator()
@@ -60,8 +49,8 @@ class LiveTranslatorApp(rumps.App):
         self._transcriber.start()
         self._audio.start()
         self._window.set_status('listening')
+        self._window.update_toggle_label(is_running=True)
         self._running = True
-        return True
 
     def _stop(self):
         if self._audio:
@@ -71,6 +60,7 @@ class LiveTranslatorApp(rumps.App):
             self._transcriber.stop()
             self._transcriber = None
         self._window.set_status('paused')
+        self._window.update_toggle_label(is_running=False)
         self._running = False
 
     def _on_final(self, text: str):
@@ -88,13 +78,10 @@ class LiveTranslatorApp(rumps.App):
         except Exception:
             self._window.set_translation('翻譯暫時失敗')
 
-    def clear_subtitles(self, _):
-        self._window.clear()
-
-    def quit_app(self, _):
-        self._stop()
-        rumps.quit_application()
+    def run(self):
+        """主執行緒進入點：啟動 tkinter（blocking）。"""
+        self._window.run()
 
 
 if __name__ == '__main__':
-    LiveTranslatorApp().run()
+    LiveTranslator().run()
