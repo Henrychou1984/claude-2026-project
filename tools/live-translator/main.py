@@ -13,6 +13,7 @@ class LiveTranslator:
         self._audio: AudioCapture | None = None
         self._transcriber: Transcriber | None = None
         self._translator: Translator | None = None
+        self._last_interim: str = ''   # 防止重複翻譯相同 interim
 
         self._window = SubtitleWindow(
             on_toggle=self.toggle,
@@ -41,7 +42,7 @@ class LiveTranslator:
             self._translator = Translator()
 
         self._transcriber = Transcriber(
-            on_interim=self._window.set_interim,
+            on_interim=self._on_interim,
             on_final=self._on_final,
         )
         self._audio = AudioCapture(device_index=device, callback=self._transcriber.feed)
@@ -63,7 +64,27 @@ class LiveTranslator:
         self._window.update_toggle_label(is_running=False)
         self._running = False
 
+    def _on_interim(self, text: str):
+        self._window.set_interim(text)
+        # Interim 也翻譯，但跳過與上次相同的內容
+        if text and text != self._last_interim:
+            self._last_interim = text
+            threading.Thread(
+                target=self._translate_interim,
+                args=(text,),
+                daemon=True,
+            ).start()
+
+    def _translate_interim(self, text: str):
+        try:
+            zh = self._translator.translate(text)
+            if zh:
+                self._window.set_translation(zh)
+        except Exception:
+            pass  # interim 翻譯失敗不顯示錯誤
+
     def _on_final(self, text: str):
+        self._last_interim = ''  # 重置，讓下一段 interim 能觸發翻譯
         self._window.set_final(text)
         threading.Thread(
             target=self._translate_and_display,
