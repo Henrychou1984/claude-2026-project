@@ -1,5 +1,6 @@
 import queue
 import tkinter as tk
+import numpy as np
 from typing import Callable
 
 BG = '#0f172a'
@@ -33,6 +34,9 @@ class SubtitleWindow:
         self._drag_y = 0
 
     # ── 公開佇列方法（任何執行緒皆可呼叫）──────────────────────
+
+    def set_level(self, rms: float):
+        self._queue.put(('level', rms))
 
     def set_interim(self, text: str):
         self._queue.put(('interim', text + ' |'))
@@ -139,6 +143,14 @@ class SubtitleWindow:
             padx=14, pady=8, anchor='w',
         ).pack(fill='x')
 
+        # 音量指示列
+        self._level_var = tk.StringVar(value='')
+        tk.Label(
+            self._root, textvariable=self._level_var,
+            bg='#0a1628', fg='#334155', font=('Menlo', 9),
+            padx=14, pady=2, anchor='w',
+        ).pack(fill='x')
+
     # ── 歷史追加 ────────────────────────────────────────────────
 
     def _append_to_history(self, en: str, zh: str):
@@ -162,7 +174,13 @@ class SubtitleWindow:
         try:
             while True:
                 event, text = self._queue.get_nowait()
-                if event == 'interim':
+                if event == 'level':
+                    bars = int(text * 300)
+                    bars = min(bars, 20)
+                    filled = '█' * bars + '░' * (20 - bars)
+                    db_label = f'{20 * np.log10(text + 1e-9):.0f} dB' if text > 0 else ''
+                    self._level_var.set(f'音量 {filled} {db_label}')
+                elif event == 'interim':
                     self._interim_var.set(text)
                 elif event == 'final':
                     self._pending_final = text

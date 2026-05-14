@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <key>CFBundleExecutable</key>
+    <string>LiveTranslator</string>
+    <key>CFBundleIdentifier</key>
+    <string>com.henrychou.livetranslator</string>
+    <key>CFBundleName</key>
+    <string>即時翻譯</string>
+    <key>CFBundleDisplayName</key>
+    <string>即時翻譯</string>
+    <key>CFBundleVersion</key>
+    <string>1.0</string>
+    <key>CFBundlePackageType</key>
+    <string>APPL</string>
+    <key>NSHighResolutionCapable</key>
+    <true/>
+    <key>LSMinimumSystemVersion</key>
+    <string>12.0</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>即時翻譯需要存取音訊裝置（BlackHole）以擷取系統聲音並進行即時辨識翻譯。</string>
+    <key>NSSpeechRecognitionUsageDescription</key>
+    <string>即時翻譯使用語音辨識將英文音訊轉為文字。</string>
+</dict>
+</plist>

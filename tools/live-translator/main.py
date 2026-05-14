@@ -38,17 +38,33 @@ class LiveTranslator:
             )
             return
 
-        if self._translator is None:
-            self._translator = Translator()
+        try:
+            if self._translator is None:
+                self._translator = Translator()
 
-        self._transcriber = Transcriber(
-            on_interim=self._on_interim,
-            on_final=self._on_final,
-        )
-        self._audio = AudioCapture(device_index=device, callback=self._transcriber.feed)
+            self._transcriber = Transcriber(
+                on_interim=self._on_interim,
+                on_final=self._on_final,
+            )
+            self._audio = AudioCapture(
+                device_index=device,
+                callback=self._transcriber.feed,
+                on_level=self._window.set_level,
+            )
 
-        self._transcriber.start()
-        self._audio.start()
+            self._transcriber.start()
+            self._audio.start()
+        except Exception as e:
+            self._transcriber = None
+            self._audio = None
+            msgbox.showerror(
+                '啟動失敗',
+                f'無法開啟音訊串流：\n{e}\n\n'
+                '請至「系統設定 → 隱私權與安全性 → 麥克風」\n'
+                '確認本程式已獲得存取權限。',
+            )
+            return
+
         self._window.set_status('listening')
         self._window.update_toggle_label(is_running=True)
         self._running = True

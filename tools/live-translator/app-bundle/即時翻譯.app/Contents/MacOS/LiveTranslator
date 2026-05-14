@@ -1,0 +1,11 @@
+#!/bin/bash
+TOOL_DIR="/Users/henrychou/Library/CloudStorage/GoogleDrive-heero7394@gmail.com/我的雲端硬碟/claude-2026-project/tools/live-translator"
+FRAMEWORK_PY="/opt/homebrew/opt/python@3.12/Frameworks/Python.framework/Versions/3.12/bin/python3.12"
+LOG="$TOOL_DIR/launch.log"
+
+echo "[$(date)] Starting..." > "$LOG"
+export PYTHONPATH="$TOOL_DIR/venv/lib/python3.12/site-packages"
+export PATH="$TOOL_DIR/venv/bin:$PATH"
+cd "$TOOL_DIR"
+echo "[$(date)] Running python..." >> "$LOG"
+exec "$FRAMEWORK_PY" "$TOOL_DIR/main.py" >> "$LOG" 2>&1

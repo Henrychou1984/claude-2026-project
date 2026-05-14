@@ -19,9 +19,15 @@ def find_blackhole_device() -> Optional[int]:
 
 
 class AudioCapture:
-    def __init__(self, device_index: int, callback: Callable[[np.ndarray], None]):
+    def __init__(
+        self,
+        device_index: int,
+        callback: Callable[[np.ndarray], None],
+        on_level: Optional[Callable[[float], None]] = None,
+    ):
         self._device = device_index
         self._callback = callback
+        self._on_level = on_level
         self._stream = None
 
     def start(self):
@@ -42,4 +48,8 @@ class AudioCapture:
             self._stream = None
 
     def _audio_callback(self, indata: np.ndarray, frames: int, time, status):
-        self._callback(indata[:, 0].copy())
+        mono = indata[:, 0].copy()
+        self._callback(mono)
+        if self._on_level:
+            rms = float(np.sqrt(np.mean(mono ** 2)))
+            self._on_level(rms)
