@@ -9,17 +9,17 @@
 - **接續工作**：對 Claude 說「讀工作筆記、告訴我上次做到哪」
 
 ## 工作桌 + 三個家
-- 📋 GDrive 工作桌：`~/Library/CloudStorage/GoogleDrive-heero7394@gmail.com/我的雲端硬碟/claude-2026-project/`（自動跨電腦同步）
+- 📋 GDrive 工作桌：`~/Library/CloudStorage/GoogleDrive-heero7394@gmail.com/我的雲端硬碟/個人系統/claude-2026-project/`（自動跨電腦同步）
 - 🐙 GitHub repo：`Henrychou1984/claude-2026-project`（公開，網頁的家）
 - 📘 Obsidian 駕駛艙：`secondbrain/claude-2026-project/工作筆記.md`（想法的家）
 - 🔥 Firebase 專案：`my-teaching-tools`（資料的家）
 
 ## 工具清單
 （之後加新工具時會自動更新）
-- **live-translator** (`tools/live-translator/`)：macOS 即時英中字幕翻譯，系統音訊 → faster-whisper → Argos Translate → 懸浮視窗。啟動：`source venv/bin/activate && python main.py`
+- **live-translator** (`tools/live-translator/`)：macOS 即時英中字幕翻譯，系統音訊 → faster-whisper → Argos Translate → 懸浮視窗。啟動方式二選一：①雙擊桌面的 `即時翻譯.app`（內含啟動腳本，路徑寫死指向本資料夾，搬家後需同步更新）②終端機 `source venv/bin/activate && python main.py`
 
 ## 開工 SOP（使用者說「開工」時執行）
-1. 讀 Obsidian 工作筆記：`~/Library/CloudStorage/GoogleDrive-heero7394@gmail.com/我的雲端硬碟/secondbrain/claude-2026-project/工作筆記.md`
+1. 讀 Obsidian 工作筆記：`~/Library/CloudStorage/GoogleDrive-heero7394@gmail.com/我的雲端硬碟/個人系統/secondbrain/claude-2026-project/工作筆記.md`
 2. 摘要「⏯️ 上次做到哪」段（不要全文貼出）
 3. 執行 `git status --short`（在 claude-2026-project 目錄）
 4. 執行 `git fetch origin`，確認遠端是否有新 commit（不主動 pull）

@@ -1,5 +1,5 @@
 #!/bin/bash
-TOOL_DIR="/Users/henrychou/Library/CloudStorage/GoogleDrive-heero7394@gmail.com/我的雲端硬碟/claude-2026-project/tools/live-translator"
+TOOL_DIR="/Users/henrychou/Library/CloudStorage/GoogleDrive-heero7394@gmail.com/我的雲端硬碟/個人系統/claude-2026-project/tools/live-translator"
 FRAMEWORK_PY="/opt/homebrew/opt/python@3.12/Frameworks/Python.framework/Versions/3.12/bin/python3.12"
 LOG="$TOOL_DIR/launch.log"
 

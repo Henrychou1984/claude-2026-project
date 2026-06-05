@@ -31,7 +31,20 @@ pip install -r requirements.txt
 
 ### 第三步：啟動程式
 
+兩種方式擇一：
+
+**方式 A — 雙擊桌面 App（最簡單）**
+
+直接雙擊桌面的 `即時翻譯.app`。
+
+> ⚠️ App 內的啟動腳本（`Contents/MacOS/LiveTranslator`）把本資料夾路徑寫死了。
+> 若日後把專案資料夾搬家或改名，需同步修改該腳本裡的 `TOOL_DIR`，否則 App 會啟動失敗。
+
+**方式 B — 終端機啟動**
+
 ```bash
+cd tools/live-translator
+source venv/bin/activate
 python main.py
 ```
 
