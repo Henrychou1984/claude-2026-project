@@ -18,20 +18,11 @@
 （之後加新工具時會自動更新）
 - **live-translator** (`tools/live-translator/`)：macOS 即時英中字幕翻譯，系統音訊 → faster-whisper → Argos Translate → 懸浮視窗。啟動方式二選一：①雙擊桌面的 `即時翻譯.app`（內含啟動腳本，路徑寫死指向本資料夾，搬家後需同步更新）②終端機 `source venv/bin/activate && python main.py`
 
-## 開工 SOP（使用者說「開工」時執行）
-1. 讀 Obsidian 工作筆記：`~/Library/CloudStorage/GoogleDrive-heero7394@gmail.com/我的雲端硬碟/個人系統/secondbrain/claude-2026-project/工作筆記.md`
-2. 摘要「⏯️ 上次做到哪」段（不要全文貼出）
-3. 執行 `git status --short`（在 claude-2026-project 目錄）
-4. 執行 `git fetch origin`，確認遠端是否有新 commit（不主動 pull）
-5. 給結構化報告 + 建議下一步，等使用者選方向
-
-## 收工 SOP（使用者說「收工」時執行）
-1. 從對話歷史摘要今天完成的事
-2. 更新 Obsidian 工作筆記：
-   - 「⏯️ 上次做到哪」→ 填今天最後動作
-   - 「🗓️ 最近更動紀錄」→ 加一行今天日期 + 摘要 + ✅✅✅
-3. `git add`（排除 `.claude/`）→ `git commit` → `git push origin main`
-4. 回報三勾表格（GDrive ✅ / Obsidian ✅ / GitHub ✅）
+## 開工 / 收工 SOP
+完整流程已收斂到**全域技能**（`~/.claude/skills/start-work`、`end-work`），所有專案共用、單一維護來源。
+- 說「**開工**」→ 讀工作筆記摘要進度 + `git status`/`fetch` + 建議下一步
+- 說「**收工**」→ 摘要今天 + 更新工作筆記 + `git add/commit/push` + 三勾表格
+- 本專案的工作筆記固定在：`~/Library/CloudStorage/GoogleDrive-heero7394@gmail.com/我的雲端硬碟/個人系統/secondbrain/claude-2026-project/工作筆記.md`
 
 ## 工作注意事項
 - 學生資料一律去識別化（只用座號 + 班級代號）
