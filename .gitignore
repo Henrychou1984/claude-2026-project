@@ -1,7 +1,13 @@
+# macOS 系統檔
+.DS_Store
+
 # Google Drive 系統檔
 desktop.ini
 *.tmp
 ~$*
+
+# 執行期日誌
+*.log
 
 # 敏感資料
 .env
